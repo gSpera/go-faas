@@ -14,6 +14,8 @@ const (
 )
 
 func main() {
+	checkDebugFlag()
+
 	fns, err := ioutil.ReadDir(functionsDir)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Cannot read %s directory: %v\n", functionsDir, err)
@@ -22,16 +24,22 @@ func main() {
 
 	for _, fn := range fns {
 		if fn.IsDir() { //Sub-directory are not supported yet
+			log("Skipping directory: %s\n", fn.Name())
 			continue
 		}
 
+		log("Loading plugin: %s\n", fn.Name())
 		plPath := path.Join(functionsDir, fn.Name())
+		log(" -Path: %s\n", plPath)
 		pl, err := loadFunction(plPath)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "Cannot load plugin %s: %v\n", fn.Name(), err)
 		}
+
+		log(" -Handling %s: %s\n", pl.route, fn.Name())
 		http.HandleFunc(pl.route, pl.handler)
 	}
 
+	log("Listening: %s\n", addr)
 	http.ListenAndServe(addr, nil)
 }
