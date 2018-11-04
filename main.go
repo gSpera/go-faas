@@ -16,6 +16,11 @@ const (
 func main() {
 	checkDebugFlag()
 
+	if _, err := os.Stat(functionsDir); os.IsNotExist(err) {
+		log("Creating %s directory\n", functionsDir)
+		os.Mkdir(functionsDir, 0766)
+	}
+
 	fns, err := ioutil.ReadDir(functionsDir)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Cannot read %s directory: %v\n", functionsDir, err)
