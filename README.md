@@ -12,14 +12,17 @@ package main
 
 import "net/http"
 
-const Route = "/example"
+//Route is the route used to acces this function
+var Route = "/example"
 
-func Handle(w http.ResponseWriter, req *http.Response) {
-    w.Write([]byte("This is a function"))
+//Handle is the entrypoint to the function
+func Handle(w http.ResponseWriter, req *http.Request) {
+	w.Write([]byte("This is an example"))
 }
+
 ```
 Building is achived thanks to plugins
-`go build --buildmode=plugin`
+`go build --buildmode=plugin example.go`
 
 Now copy the output to the functions folder within the go-faas executable
 `cp example /path/to/go-faas/functions/`
