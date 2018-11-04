@@ -1,10 +1,10 @@
-#Go Faas
-##WIP: This is a WIP project
+# Go Faas
+## WIP: This is a WIP project
 
 Go Faas is an attempt to port faas(function as a service) to a simpler level,
 this can be accomplished thanks to Golang plugin support(currently not for Windows).
 
-##Creating a Function
+## Creating a Function
 The main goal is that writing a function should be the simplest possible.
 A function is made of a path (*Route*) and an handler(*Handler*)
 ```go
